@@ -8,9 +8,14 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam).
 
 ## Requisites
 - ROS kinetic or Melodic
-- Ceres Solver
 - PCL (Point Cloud Library)
-This code obtains the odometry of a UGV with the estimation of the position transform between 2 point clouds (a current one with a previous one) obtained by a Velodyne VLP16 3D-lidar sensor.
+- Ceres Solver
+### Ceres instalation
+
+```
+# clone the repository 
+git clone https://ceres-solver.googlesource.com/ceres-solver
+```
 
 ## Test
 <p align='center'>
