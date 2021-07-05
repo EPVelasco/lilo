@@ -1,7 +1,7 @@
 # Lilo
 ## LiLo: Lite 3D-Lidar Odometry
 
-<p align='center'>
+<p align='rigth'>
 <img width="50%" src="/images/test_circuit.GIF"/>
 </p>
 
@@ -13,6 +13,9 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam).
 
 ## Requisites
 - ROS kinetic or Melodic
+- Velodyne repository
+```sudo apt-get install ros-$ROS_DYSTRO-velodyne-pointcloud
+```
 - PCL (Point Cloud Library)
 - Ceres Solver
 ### Ceres instalation
