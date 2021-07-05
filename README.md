@@ -2,9 +2,9 @@
 ## LiLo: Lite 3D-Lidar Odometry
 
 <p float="left">
-  <img src="/images/test_loop.GIF" width="500" />
+  <img src="/images/test_loop.GIF" width="500" high = "250" />
   <a href="https://github.com/AUROVA-LAB/robot_blue">
-    <img src="/images/blue.jpg" width=300" /> 
+    <img src="/images/blue.jpg" width="300" high = "250" /> 
   <a>
 </p>
 
