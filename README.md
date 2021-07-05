@@ -2,7 +2,7 @@
 ## LiLo: Lite 3D-Lidar Odometry
 
 <p >
-<align='rigth', img width="50%" src="/images/test_circuit.GIF"/>
+<align='rigth' img width="50%" src="/images/test_circuit.GIF"/>
 </p>
 
 
