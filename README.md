@@ -1,5 +1,10 @@
 # Lilo
 ## LiLo: Lite 3D-Lidar Odometry
+
+<a align='right'>
+<img width="50%" src="/images/test_circuit.GIF"/>
+</a>
+
 This code obtains the odometry of a UGV ([BLUE](https://github.com/AUROVA-LAB/robot_blue) with the estimation of the position transform between two point-clouds (a current one with a previous one) obtained by a Velodyne VLP16 3D-lidar sensor.
 
 This code is modified from [FLOAM](https://github.com/wh200720041/floam).
@@ -34,11 +39,9 @@ make test
 make install
 ```
 ## Test Lilo
-<a align='right'>
-<img width="50%" src="/images/test_circuit.GIF"/>
-</a>
+
 <b align='left'>
-<img width="50%" src="/images/Scientific Park.GIF"/>
+<img width="80%" src="/images/Scientific Park.GIF"/>
 </b>
 
 ## Launch
