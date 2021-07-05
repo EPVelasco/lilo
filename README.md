@@ -34,9 +34,12 @@ make test
 make install
 ```
 ## Test Lilo
-<p align='center'>
+<a align='right'>
 <img width="50%" src="/images/test_circuit.GIF"/>
-</p>
+</a>
+<b align='left'>
+<img width="50%" src="/images/Scientific Park.GIF"/>
+</b>
 
 ## Launch
 ```
