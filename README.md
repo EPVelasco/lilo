@@ -45,6 +45,14 @@ make -j3
 make test
 make install
 ```
+## Clone repository
+```
+    cd ~/catkin_ws/src
+    git clone https://github.com/EPVelasco/Lilo.git
+    cd ..
+    catkin_make
+    source ~/catkin_ws/devel/setup.bash
+```
                                           
 ## Ros Launch
 ```
