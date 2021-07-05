@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <launch>
 
-    <param name="scan_period" value="0.1" />
-    <param name="vertical_angle" type="double" value="-2.0" />
+    <param name="scan_period" value="0.1" />    
     <param name="map_resolution" type="double" value="0.5" />
-    <param name="max_dis" type="double" value="30.0" />
+    <param name="max_dis" type="double" value="20.0" />
     <param name="min_dis" type="double" value="0" />
+    <param name="vertical_angle" type="double" value="-2.0" />
     <param name="validation_angle" type="bool" value="false" />
 
     <!--- --> 
