@@ -1,7 +1,7 @@
 # Lilo
 ## LiLo: Lite 3D-Lidar Odometry
 
-<a align='right'>
+<a align='center'>
 <img width="50%" src="/images/test_circuit.GIF"/>
 </a>
 
@@ -40,7 +40,7 @@ make install
 ```
 ## Test Lilo
 
-<b align='left'>
+<b align='center'>
 <img width="80%" src="/images/Scientific Park.GIF"/>
 </b>
 
