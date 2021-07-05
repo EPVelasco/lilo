@@ -4,13 +4,11 @@
   <version>0.0.0</version>
 
   <description>
-    This work is created based floam
+    This work is created based to Floam (Fast and Optimized Lidar Odometry And Mapping)
   </description>
 
-  <maintainer email="epvs@gmail.com">EPVS</maintainer>
-
   <license>BSD</license>
-  <author email="epvs@gmail.com">EPVS</author>
+  <author email="epvelasco1912@gmail.com">EPVelasco</author>
   
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>
