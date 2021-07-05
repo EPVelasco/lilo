@@ -50,8 +50,7 @@ make install
     cd ~/catkin_ws/src
     git clone https://github.com/EPVelasco/Lilo.git
     cd ..
-    catkin_make
-    source ~/catkin_ws/devel/setup.bash
+    catkin_make --only-pkg-with-deps lilo
 ```
                                           
 ## Ros Launch
