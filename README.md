@@ -11,13 +11,29 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam).
 - PCL (Point Cloud Library)
 - Ceres Solver
 ### Ceres instalation
-
+- Clone the repository 
 ```
-# clone the repository 
 git clone https://ceres-solver.googlesource.com/ceres-solver
 ```
-
-## Test
+- Install all the dependencies
+```
+sudo apt-get install cmake
+sudo apt-get install libgoogle-glog-dev libgflags-dev
+sudo apt-get install libatlas-base-dev
+sudo apt-get install libeigen3-dev
+sudo apt-get install libsuitesparse-dev
+```
+- Build, test, and install Ceres.
+```
+tar zxf ceres-solver-2.0.0.tar.gz
+mkdir ceres-bin
+cd ceres-bin
+cmake ../ceres-solver-2.0.0
+make -j3
+make test
+make install
+```
+## Test Lilo
 <p align='center'>
 <img width="50%" src="/images/test_circuit.GIF"/>
 </p>
