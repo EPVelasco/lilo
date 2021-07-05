@@ -14,5 +14,10 @@ This code obtains the odometry of a UGV with the estimation of the position tran
 
 ## Test
 <p align='center'>
-<img width="80%" src="/images/test_circuit.GIF"/>
+<img width="50%" src="/images/test_circuit.GIF"/>
 </p>
+
+## Launch
+```
+    roslaunch lilo lilo_velodyne.launch
+```
