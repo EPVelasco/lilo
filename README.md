@@ -1,9 +1,10 @@
 # Lilo
 ## LiLo: Lite 3D-Lidar Odometry
 
-<p align='rigth'>
-<img width="50%" src="/images/test_circuit.GIF"/>
+<p >
+<align='rigth', img width="50%" src="/images/test_circuit.GIF"/>
 </p>
+
 
 This code obtains the odometry of a UGV ([BLUE](https://github.com/AUROVA-LAB/robot_blue) with the estimation of the position transform between two point-clouds (a current one with a previous one) obtained by a Velodyne VLP16 3D-lidar sensor.
 
@@ -14,7 +15,8 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam).
 ## Requisites
 - ROS kinetic or Melodic
 - Velodyne repository
-```sudo apt-get install ros-$ROS_DYSTRO-velodyne-pointcloud
+```
+sudo apt-get install ros-$ROS_DYSTRO-velodyne-pointcloud
 ```
 - PCL (Point Cloud Library)
 - Ceres Solver
