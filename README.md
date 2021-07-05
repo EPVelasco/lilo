@@ -15,12 +15,12 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam).
 **Modifier:** Edison P. Velasco Sánchez, Universidad de Alicante, Spain.
 
 ## Requisites
-- ROS kinetic or Melodic
-- Velodyne repository
+- [ROS] (http://wiki.ros.org/ROS/Installation) Kinetic or Melodic
+- [Velodyne] (https://github.com/ros-drivers/velodyne) repository
 ```
-sudo apt-get install ros-$ROS_DYSTRO-velodyne-pointcloud
+sudo apt-get install ros-$ROS-DISTRO-velodyne-pointcloud
 ```
-- PCL (Point Cloud Library)
+- [PCL] (https://pointclouds.org/) (Point Cloud Library)
 - Ceres Solver
 ### Ceres instalation
 - Clone the repository 
@@ -45,13 +45,15 @@ make -j3
 make test
 make install
 ```
-## Test Lilo
+                                          
+## Ros Launch
+```
+    roslaunch lilo lilo_velodyne.launch
+```
+## Test 
 
 <p align='center'>
 <img width="80%" src="/images/Scientific Park.GIF"/>
 </p>
 
-## Launch
-```
-    roslaunch lilo lilo_velodyne.launch
-```
+
