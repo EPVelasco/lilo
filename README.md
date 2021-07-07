@@ -48,7 +48,7 @@ make install
 ## Clone repository
 ```
     cd ~/catkin_ws/src
-    git clone https://github.com/EPVelasco/Lilo.git
+    git clone https://github.com/EPVelasco/lilo.git
     cd ..
     catkin_make --only-pkg-with-deps lilo
 ```
