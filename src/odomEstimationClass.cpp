@@ -14,7 +14,7 @@ void OdomEstimationClass::init(lidar::Lidar lidar_param, double map_resolution){
 
     //downsampling size
     downSizeFilterEdge.setLeafSize(map_resolution, map_resolution, map_resolution);
-    downSizeFilterSurf.setLeafSize(map_resolution * 2, map_resolution * 2, map_resolution * 2);
+    downSizeFilterSurf.setLeafSize(map_resolution, map_resolution, map_resolution);
 
     //kd-tree
     kdtreeEdgeMap = pcl::KdTreeFLANN<pcl::PointXYZI>::Ptr(new pcl::KdTreeFLANN<pcl::PointXYZI>());
