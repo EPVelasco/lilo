@@ -19,8 +19,8 @@ class Lidar
 
         void setScanPeriod(double scan_period_in);
         void setLines(double num_lines_in);
-        void setVerticalAngle(double vertical_angle_in);
-        void setValidationAngle(bool validation_angle_in);
+        void setVerticalAngle(double velodyne_height_in);
+        void setValidationAngle(bool validation_height_in);
         void setVerticalResolution(double vertical_angle_resolution_in);
         void setMaxDistance(double max_distance_in);
         void setMinDistance(double min_distance_in);
@@ -33,8 +33,8 @@ class Lidar
         double horizontal_angle_resolution;
         double horizontal_angle;
         double vertical_angle_resolution;
-        double vertical_angle;
-        bool validation_angle;
+        double velodyne_height;
+        bool validation_height;
 };
 
 
