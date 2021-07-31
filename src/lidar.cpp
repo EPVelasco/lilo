@@ -17,12 +17,12 @@ void lidar::Lidar::setLines(double num_lines_in){
     num_lines=num_lines_in;
 }
 
-void lidar::Lidar::setValidationAngle(bool validation_angle_in){
-    validation_angle=validation_angle_in;
+void lidar::Lidar::setValidationAngle(bool validation_height_in){
+    validation_height = validation_height_in;
 }
 
-void lidar::Lidar::setVerticalAngle(double vertical_angle_in){
-    vertical_angle = vertical_angle_in;
+void lidar::Lidar::setVerticalAngle(double velodyne_height_in){
+    velodyne_height = velodyne_height_in;
 }
 
 
