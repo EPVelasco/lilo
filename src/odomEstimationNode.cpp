@@ -16,6 +16,7 @@
 //ros lib
 #include <ros/ros.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <std_msgs/Float64.h>
 #include <nav_msgs/Odometry.h>
 #include <tf/transform_datatypes.h>
 #include <tf/transform_broadcaster.h>
@@ -37,7 +38,7 @@ lidar::Lidar lidar_param;
 
 ros::Publisher pubLaserOdometry;
 
-ros::Publisher pubLaserVelocity;
+ros::Publisher time_average;
 
 
 void velodyneSurfHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
@@ -54,20 +55,20 @@ void velodyneEdgeHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
 }
 
 bool is_odom_inited = false;
-double total_time =0;
+double total_time =0, edge_limit, surf_limit;
 int total_frame=0;
+bool clear_map;
 void odom_estimation(){
 
     // previous odometry
     double x_orient_prev = 0;
     double y_orient_prev = 0;
     double z_orient_prev = 0;
-    double w_orient_prev = 0;
 
     double x_pos_prev = 0;
     double y_pos_prev = 0;
     double z_pos_prev = 0;
-    float time_delay  = 1;
+    float time_delay  = 0;
 
 
     while(1){
@@ -91,11 +92,11 @@ void odom_estimation(){
             }else{
                 std::chrono::time_point<std::chrono::system_clock> start, end;
                 start = std::chrono::system_clock::now();
-                odomEstimation.updatePointsToMap(pointcloud_edge_in, pointcloud_surf_in);
+                odomEstimation.updatePointsToMap(pointcloud_edge_in, pointcloud_surf_in, clear_map, edge_limit , surf_limit);
                 end = std::chrono::system_clock::now();
                 std::chrono::duration<float> elapsed_seconds = end - start;
                 total_frame++;
-                float time_temp = elapsed_seconds.count() * 1000;
+                float time_temp = elapsed_seconds.count() * 1000.0;
                 total_time+=time_temp;
                 time_delay = total_time/total_frame;
                 ROS_INFO("average odom estimation time %f ms \n \n", time_delay);
@@ -113,21 +114,7 @@ void odom_estimation(){
             transform.setOrigin( tf::Vector3(t_current.x(), t_current.y(), t_current.z()) );
             tf::Quaternion q(q_current.x(),q_current.y(),q_current.z(),q_current.w());
             transform.setRotation(q);
-            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "base_link"));
-
-            // publish odometry
-            nav_msgs::Odometry laserOdometry;
-            laserOdometry.header.frame_id = "map";
-            laserOdometry.child_frame_id = "base_link";
-            laserOdometry.header.stamp = pointcloud_time;
-            laserOdometry.pose.pose.orientation.x = q_current.x();
-            laserOdometry.pose.pose.orientation.y = q_current.y();
-            laserOdometry.pose.pose.orientation.z = q_current.z();
-            laserOdometry.pose.pose.orientation.w = q_current.w();
-            laserOdometry.pose.pose.position.x = t_current.x();
-            laserOdometry.pose.pose.position.y = t_current.y();
-            laserOdometry.pose.pose.position.z = t_current.z();
-            pubLaserOdometry.publish(laserOdometry);
+            br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom_lidar", "base_link"));
 
 
             // Velocity
@@ -148,21 +135,49 @@ void odom_estimation(){
             x_orient_prev = q_current.x() ;
             y_orient_prev = q_current.y() ;
             z_orient_prev = q_current.z() ;
-            w_orient_prev = q_current.w() ;
 
-            // publish velocity
-            geometry_msgs::Twist velocity_msg;
-            velocity_msg.linear.x = u_x;
-            velocity_msg.linear.y = u_y;
-            velocity_msg.linear.z = u_z;
-            velocity_msg.angular.x = w_x;
-            velocity_msg.angular.y = w_y;
-            velocity_msg.angular.z = w_z;
 
-            pubLaserVelocity.publish(velocity_msg);
+            // publish odometry
+            nav_msgs::Odometry laserOdometry;
+            laserOdometry.header.frame_id = "odom_lidar";
+            laserOdometry.child_frame_id = "base_link";
+            laserOdometry.header.stamp = pointcloud_time;
+            laserOdometry.pose.pose.orientation.x = q_current.x();
+            laserOdometry.pose.pose.orientation.y = q_current.y();
+            laserOdometry.pose.pose.orientation.z = q_current.z();
+            laserOdometry.pose.pose.orientation.w = q_current.w();
+            laserOdometry.pose.pose.position.x = t_current.x();
+            laserOdometry.pose.pose.position.y = t_current.y();
+            laserOdometry.pose.pose.position.z = t_current.z();
+            laserOdometry.twist.twist.linear.x = u_x;
+            laserOdometry.twist.twist.linear.y = u_y;
+            laserOdometry.twist.twist.linear.z = u_z;
+            laserOdometry.twist.twist.angular.x = w_x;
+            laserOdometry.twist.twist.angular.y = w_y;
+            laserOdometry.twist.twist.angular.z = w_z;
 
-        }
-        //sleep 2 ms every time
+            for(int i = 0; i<36; i++) {
+              if(i == 0 || i == 7 || i == 14) {
+                laserOdometry.pose.covariance[i] = .01;
+               }
+               else if (i == 21 || i == 28 || i== 35) {
+                 laserOdometry.pose.covariance[i] += 0.1;
+               }
+               else {
+                 laserOdometry.pose.covariance[i] = 0;
+               }
+            }
+
+            pubLaserOdometry.publish(laserOdometry);
+
+            //publish time
+
+            std_msgs::Float64 time_msg;
+            time_msg.data = time_delay*1000.0;
+            time_average.publish(time_msg);
+
+         }
+
         std::chrono::milliseconds dura(2);
         std::this_thread::sleep_for(dura);
     }
@@ -178,15 +193,25 @@ int main(int argc, char **argv)
     double scan_period= 0.1;
     double max_dis = 60.0;
     double min_dis =0;
-    double map_resolution = 0.4;
+    double edge_resolution = 0.3;
+    double surf_resolution = 0.6;
     bool validation_angle = false;
+
+    clear_map = true;
+    edge_limit = 10000;
+    surf_limit = 10000;
 
     nh.getParam("/scan_period", scan_period); 
     nh.getParam("/vertical_angle", vertical_angle); 
     nh.getParam("/max_dis", max_dis);
     nh.getParam("/min_dis", min_dis);
     nh.getParam("/scan_line", scan_line);
-    nh.getParam("/map_resolution", map_resolution);
+    nh.getParam("/edge_resolution", edge_resolution);
+    nh.getParam("/surf_resolution", surf_resolution);
+    nh.getParam("/clear_map", clear_map);
+
+    nh.getParam("/edge_limit", edge_limit);
+    nh.getParam("/surf_limit", surf_limit);
 
     lidar_param.setScanPeriod(scan_period);
     lidar_param.setValidationAngle(validation_angle);
@@ -195,15 +220,15 @@ int main(int argc, char **argv)
     lidar_param.setMaxDistance(max_dis);
     lidar_param.setMinDistance(min_dis);
 
-    odomEstimation.init(lidar_param, map_resolution);
+    odomEstimation.init(lidar_param, edge_resolution, surf_resolution);
     ros::Subscriber subEdgeLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_edge", 100, velodyneEdgeHandler);
     ros::Subscriber subSurfLaserCloud = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_surf", 100, velodyneSurfHandler);
 
     pubLaserOdometry = nh.advertise<nav_msgs::Odometry>("/odom", 100);
+    time_average = nh.advertise<std_msgs::Float64>("/time_average", 100);
+
+
     std::thread odom_estimation_process{odom_estimation};
-
-    pubLaserVelocity = nh.advertise<geometry_msgs::Twist>("/velocity", 100);
-
 
     ros::spin();
 

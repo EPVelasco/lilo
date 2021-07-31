@@ -1,31 +1,50 @@
 <?xml version="1.0"?>
 <launch>
 
-    <param name="scan_period" value="0.5" />    
-    <param name="map_resolution" type="double" value="1" />
-    <param name="max_dis" type="double" value="25.0" />
-    <param name="min_dis" type="double" value="0" />
-    <param name="vertical_angle" type="double" value="0" />
-    <param name="validation_angle" type="bool" value="false" />
+    <param name="scan_period" value="0.1" />    
+    <param name="edge_resolution" type="double" value="0.5" />
+    <param name="surf_resolution" type="double" value="1" />
+    <param name="max_dis" type="double" value="30" />
+    <param name="min_dis" type="double" value="0.5" />
+    <param name="velodyne_height" type="double" value="-20" />
+    <param name="validation_height" type="bool" value="true" />
+    <param name="clear_map" type="bool" value="true" />
+    <param name="edge_limit" type="double" value="5000" />
+    <param name="surf_limit" type="double" value="5000" />
 
     <!--- --> 
     <node pkg="lilo" type="odom_estimation_node" name="odom_estimation_node" output="screen"/>
     <node pkg="lilo" type="laser_processing_node" name="laser_processing_node" output="screen"/>
-
+<!--- 
     <node pkg="tf" type="static_transform_publisher" name="word2map_tf"  args="0 0 0 0 0 0 /world /map 10" />
     
-    <!--- -->
+    <!- -->
     <arg name="rviz" default="true" />
     <group if="$(arg rviz)">
         <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find lilo)/rviz/lilo_velodyne.rviz" />
     </group>
     <!--- -->
 
-    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_loam" ns="base_link" >
-        <param name="/target_frame_name" value="world" />
+    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_lilo" ns="base_link" >
+        <param name="/target_frame_name" value="odom_lidar" />
         <param name="/source_frame_name" value="base_link" />
         <param name="/trajectory_update_rate" value="10.0" />
         <param name="/trajectory_publish_rate" value="10.0" />
-    </node>
+   <!--   
+</node>
+
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+	    <rosparam command="load" file="$(find robot_localization)/params/ekf_template.yaml" />
+
+	   <!-  Placeholder for output topic remapping->
+	    <remap from="odometry/filtered" to="odomFilter"/>
+	<param name ="/use_sim_time" value="true"/>
+	    <!- <remap from="accel/filtered" to=""/> -->
+
+
+
+  </node> 
+
+
 
 </launch>

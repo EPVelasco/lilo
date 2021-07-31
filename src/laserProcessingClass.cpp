@@ -33,8 +33,10 @@ void LaserProcessingClass::featureExtraction(const pcl::PointCloud<pcl::PointXYZ
         if(distance<lidar_param.min_distance || distance>lidar_param.max_distance)
             continue;
         double angle = atan(pc_in->points[i].z / distance) * 180 / M_PI;
-        if (angle> lidar_param.vertical_angle && lidar_param.validation_angle)
+
+        if ((pc_in->points[i].z < lidar_param.velodyne_height) && lidar_param.validation_height)
           continue;
+
         scanID = int((angle + (N_SCANS - 1)) / 2 + 0.5);
         if (scanID > (N_SCANS - 1) || scanID < 0)
         {
