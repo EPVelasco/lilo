@@ -18,7 +18,7 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam), which 
 - [ROS](http://wiki.ros.org/ROS/Installation) Kinetic or Melodic
 - [Velodyne](https://github.com/ros-drivers/velodyne) repository
 ```
-sudo apt-get install ros-$ROS-DISTRO-velodyne-pointcloud
+sudo apt-get install ros-melodic-velodyne-pointcloud
 ```
 - [PCL](https://pointclouds.org/) (Point Cloud Library)
 - Ceres Solver
@@ -35,7 +35,7 @@ sudo apt-get install libatlas-base-dev
 sudo apt-get install libeigen3-dev
 sudo apt-get install libsuitesparse-dev
 ```
-- Build, test, and install Ceres.
+- Build, test, and install Ceres. ([latest stable release](http://ceres-solver.org/ceres-solver-2.0.0.tar.gz))
 ```
 tar zxf ceres-solver-2.0.0.tar.gz
 mkdir ceres-bin
