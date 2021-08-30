@@ -17,33 +17,33 @@ This code is modified from [FLOAM](https://github.com/wh200720041/floam), which 
 ## Requisites
 - [ROS](http://wiki.ros.org/ROS/Installation) Kinetic or Melodic
 - [Velodyne](https://github.com/ros-drivers/velodyne) repository
-```
-sudo apt-get install ros-melodic-velodyne-pointcloud
-```
+  ```
+  sudo apt-get install ros-melodic-velodyne-pointcloud
+  ```
 - [PCL](https://pointclouds.org/) (Point Cloud Library)
+- Hector trajectory server
+    ```
+    sudo apt-get install ros-melodic-hector-trajectory-server
+    ```
 - Ceres Solver
+    
 ### Ceres instalation
 - Clone the repository 
 ```
 git clone https://ceres-solver.googlesource.com/ceres-solver
 ```
-- Install all the dependencies
+- Install all the dependencies of Ceres
 ```
-sudo apt-get install cmake
-sudo apt-get install libgoogle-glog-dev libgflags-dev
-sudo apt-get install libatlas-base-dev
-sudo apt-get install libeigen3-dev
-sudo apt-get install libsuitesparse-dev
+sudo apt-get install cmake libgoogle-glog-dev libgflags-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev -y
 ```
-- Build, test, and install Ceres. ([latest stable release](http://ceres-solver.org/ceres-solver-2.0.0.tar.gz))
+- Build, test, and install Ceres. ([latest stable release](http://ceres-solver.org/installation.html))
 ```
 tar zxf ceres-solver-2.0.0.tar.gz
 mkdir ceres-bin
 cd ceres-bin
 cmake ../ceres-solver-2.0.0
 make -j3
-make test
-make install
+sudo make install
 ```
 ## Clone repository
 ```
@@ -52,6 +52,7 @@ make install
     cd ..
     catkin_make --only-pkg-with-deps lilo
 ```
+  
                                           
 ## Ros Launch
 ```
