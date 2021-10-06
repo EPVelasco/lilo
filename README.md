@@ -11,6 +11,8 @@
 This code obtains the odometry of a UGV ([BLUE](https://github.com/AUROVA-LAB/robot_blue)) with the estimation of the position transform between two point-clouds (a current one with a previous one) obtained by a Velodyne VLP16 3D-lidar sensor.
 
 This code is modified from [FLOAM](https://github.com/wh200720041/floam), which was based on [LOAM](https://github.com/laboshinl/loam_velodyne) and [A-LOAM](https://github.com/HKUST-Aerial-Robotics/A-LOAM) .
+    
+The contribution of this version of the code is that the point cloud map is not compiled and the location is generated using a configurable batch of data in the launch parameters. This means that odometry estimation times do not accumulate and are low.
 
 **Modifier:** Edison P. Velasco Sánchez, Universidad de Alicante, Spain.
 
@@ -56,6 +58,7 @@ sudo make install
                                           
 ## Ros Launch
 ```
+    roslaunch velodyne_pointcloud VLP16_points.launch
     roslaunch lilo lilo_velodyne.launch
 ```
 ## Test 
