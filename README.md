@@ -4,7 +4,7 @@
 <p float="left">
   <img src="/images/test_loop.GIF" width="480"  />
   <a href="https://github.com/AUROVA-LAB/robot_blue">
-    <img src="/images/blue.jpg" width="325" /> 
+    <img src="/images/blue.jpg" width="440" /> 
   <a>
 </p>
 
